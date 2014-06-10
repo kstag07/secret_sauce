@@ -4,36 +4,29 @@
     <title>Document</title>
   </head>
   <body>
-    <h1>Message Encoder</h1>
+    <h1>Message Decoder</h1>
     <p>This simple page lets you securely encrypt a message with a password. Your message will not leave your computer, and will not be sent over the Internet.</p>
     <p>Once it's encoded, you'll be able to share your message with anyone else who has the password.</p>
     <textarea id="message" rows="6" cols="60"></textarea>
     <br>
     <button id="encrypt">Lock Down</button>
-    <button id="decrypt">UnLock</button>
-
 
     <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/aes.js"></script>
 
     <script>
-    document.getElementById("encrypt").onclick = function() {encoder.protect() };
-     // document.getElementById("decrypt").onclick = function() {decoder.decode() };
       var encoder = {
         setMessage: function() {
-          this.message = document.getElementById('message').value;
-          console.log(this.message)
+          var message = document.getElementById('message').value;
+          console.log(message)
         },
         getPassword: function() {
-           this.password = prompt("Password Please")
-           console.log(this.password)
+          password = prompt("Password Please")
         },
         setUrl: function() {
-          this.oldUrl =  window.location.toLocaleString();
-         this.newUrl = this.oldUrl+ "?code=" + this.encrypt();
-          console.log(this.newUrl);
+          // set a variable to be url plus cypher
         },
         replaceMessageWithUrl: function () {
-           document.getElementById('message').value = this.newUrl;
+          // replace text in texr area with url function
         },
         encrypt: function() {
           cypher = CryptoJS.AES.encrypt(this.message, this.password)
@@ -42,18 +35,12 @@
           return cypher
         },
         protect: function() {
-          console.log("protect function")
           this.setMessage()
           this.getPassword()
           this.setUrl()
           this.replaceMessageWithUrl()
         }
       }
-
-      // var decoder {
-
-
-      // }
     </script>
   </body>
 </html>
