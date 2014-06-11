@@ -10,14 +10,19 @@
     <textarea id="message" rows="6" cols="60"></textarea>
     <br>
     <button id="encrypt">Lock Down</button>
-    <button id="decrypt">UnLock</button>
+    <button id="decrypt">Unlock</button>
+
 
 
     <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/aes.js"></script>
 
     <script>
+
+
+
+
     document.getElementById("encrypt").onclick = function() {encoder.protect() };
-     // document.getElementById("decrypt").onclick = function() {decoder.decode() };
+     document.getElementById("decrypt").onclick = function() {decoder.unprotect() };
       var encoder = {
         setMessage: function() {
           this.message = document.getElementById('message').value;
@@ -28,7 +33,7 @@
            console.log(this.password)
         },
         setUrl: function() {
-          this.oldUrl =  window.location.toLocaleString();
+          this.oldUrl =  window.location.toLocaleString().split('?')[0];
          this.newUrl = this.oldUrl+ "?code=" + this.encrypt();
           console.log(this.newUrl);
         },
@@ -50,10 +55,32 @@
         }
       }
 
-      // var decoder {
+       var decoder = {
 
+        getUrlValue: function(varSearch) {
+          this.code = window.location.search.substring(6)
+        },
 
-      // }
+        getPassword: function(){
+          this.password = prompt("Password Please")
+        },
+
+        getMessage: function() {
+          this.message =   CryptoJS.AES.decrypt(this.code, this.password).toString(CryptoJS.enc.Utf8)
+        },
+
+        displayMessage: function() {
+          alert(this.message)
+        },
+
+        unprotect: function() {
+          console.log("protect function")
+          this.getUrlValue()
+          this.getPassword()
+          this.getMessage()
+          this.displayMessage()
+        }
+       }
     </script>
   </body>
 </html>
